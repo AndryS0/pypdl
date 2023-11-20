@@ -375,7 +375,7 @@ class Downloader:
                 print("Download Failed!")
 
         # Initialize the downloader with stop Event
-        self.__init__(self.headers, self.proxies, self.auth)
+        self.__init__(self.headers, self.proxies, self.auth, self.verify)
         # Start the download process in a new thread
         th = threading.Thread(target=start_thread)
         th.start()
