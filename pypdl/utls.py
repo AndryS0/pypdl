@@ -76,6 +76,7 @@ class Multidown:
         headers: Dict[str, str],
         proxies: Dict[str, str],
         auth: Tuple[str, str],
+        verify: bool
     ):
         """
         Initializes the Multidown object.
@@ -97,6 +98,7 @@ class Multidown:
         self.headers = headers  # user headers
         self.proxies = proxies  # user proxies
         self.auth = auth  # user auth
+        self.verify = verify
 
     def getval(self, key: str) -> Any:
         """
@@ -156,6 +158,7 @@ class Multidown:
                         headers=headers,
                         proxies=self.proxies,
                         auth=self.auth,
+                        verify=self.verify,
                         stream=True,
                         timeout=20,
                     ) as r:
@@ -190,6 +193,7 @@ class Singledown:
         headers: Dict[str, str],
         proxies: Dict[str, str],
         auth: Tuple[str, str],
+        verify: bool
     ):
         """
         Initializes the Singledown object.
@@ -210,6 +214,7 @@ class Singledown:
         self.headers = headers  # user headers
         self.proxies = proxies  # user proxies
         self.auth = auth  # user auth
+        self.verify = verify
 
     def worker(self):
         """
@@ -225,6 +230,7 @@ class Singledown:
                 headers=self.headers,
                 proxies=self.proxies,
                 auth=self.auth,
+                verify=self.verify
             ) as r, open(self.path, "wb") as file:
                 for chunk in r.iter_content(1048576):  # 1MB
                     if chunk:

@@ -20,7 +20,7 @@ from .utls import (
 
 
 class Downloader:
-    def __init__(self, headers={}, proxies=None, auth=None):
+    def __init__(self, headers={}, proxies=None, auth=None, verify=True):
         """
         Initializes the Downloader object.
 
@@ -51,6 +51,7 @@ class Downloader:
         self.headers = headers  # headers to be used in the download request
         self.proxies = proxies  # proxies to be used in the download request
         self.auth = auth  # proxy auth to be used in the download request
+        self.verify = verify  # whether to verify the certificate in the download request
         self.Failed = False  # flag to indicate if download failure
 
     def _download(
@@ -80,6 +81,7 @@ class Downloader:
             headers=self.headers,
             proxies=self.proxies,
             auth=self.auth,
+            verify=self.verify
         )
 
         # get file name from headers
@@ -122,6 +124,7 @@ class Downloader:
                 self.headers,
                 self.proxies,
                 self.auth,
+                self.verify
             )
             # create single download worker thread
             th = threading.Thread(target=sd.worker)
@@ -181,6 +184,7 @@ class Downloader:
                     self.headers,
                     self.proxies,
                     self.auth,
+                    self.verify
                 )
                 # create worker thread for each connection
                 th = threading.Thread(target=md.worker)
@@ -339,7 +343,7 @@ class Downloader:
                     if self._Error.is_set():
                         time.sleep(3)
                         # reset the downloader object
-                        self.__init__(self.headers, self.proxies, self.auth)
+                        self.__init__(self.headers, self.proxies, self.auth, self.verify)
 
                         # get a new download URL to retry
                         _url = url
