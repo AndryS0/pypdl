@@ -201,7 +201,7 @@ class Downloader:
         interval = 0.15
         self.download_mode = "Multi-Threaded" if not singlethread else "Single-Threaded"
         # use reprint library to print dynamic progress output
-        with output(initial_len=5, interval=0) as dynamic_print:
+        with output(initial_len=5, interval=0, no_warning=True) as dynamic_print:
             while True:
                 if not singlethread:
                     # save progress to progress file
